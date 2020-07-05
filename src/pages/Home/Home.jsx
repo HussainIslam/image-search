@@ -1,18 +1,38 @@
 import React, { Component } from "react";
 import { InputGroup, FormControl } from "react-bootstrap";
+import axios from "axios";
 
 class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
             searchString: "",
+            searchResult: "",
         };
     }
 
+    componentDidMount() {}
+
     handleSearch(event) {
-        this.setState({ searchString: event.target.value }, () =>
-            console.log(this.state.searchString)
-        );
+        if (event.key === "Enter") {
+            this.setState({ searchString: event.target.value }, () => {
+                console.log(process.env.REACT_APP_UNSPLASH_ACCESS_KEY);
+                const options = {
+                    headers: {
+                        Authorization:
+                            "Client-ID " +
+                            process.env.REACT_APP_UNSPLASH_ACCESS_KEY,
+                    },
+                };
+                axios
+                    .get(
+                        "https://api.unsplash.com/search/photos?page=1&query=office",
+                        options
+                    )
+                    .then((res) => console.log(res))
+                    .catch((error) => console.log(error));
+            });
+        }
     }
 
     render() {
@@ -21,7 +41,7 @@ class Home extends Component {
                 <FormControl
                     placeholder="Search images here"
                     aria-label="Search bar for images"
-                    onChange={this.handleSearch.bind(this)}
+                    onKeyPress={this.handleSearch.bind(this)}
                 />
                 <InputGroup.Append>
                     <InputGroup.Text>Search</InputGroup.Text>
