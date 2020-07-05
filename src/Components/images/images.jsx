@@ -13,7 +13,7 @@ class Images extends Component {
               })
             : null;
         return data ? (
-            <Gallery photos={data} direction={"column"} columns="6" />
+            <Gallery photos={data} direction={"column"} columns={6} />
         ) : null;
     }
 }

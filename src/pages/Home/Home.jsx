@@ -27,11 +27,11 @@ class Home extends Component {
                 };
                 axios
                     .get(
-                        `https://api.unsplash.com/search/photos?page=1&query=${this.state.searchString}`,
+                        `https://api.unsplash.com/search/photos?page=1&query=${this.state.searchString}&per_page=30`,
                         options
                     )
                     .then((res) => {
-                        console.log(res.data.results);
+                        console.log(res);
                         this.setState({ searchResult: res.data.results });
                     })
                     .catch((error) => console.log(error));
