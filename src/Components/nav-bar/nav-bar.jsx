@@ -3,8 +3,6 @@ import { Navbar, Nav, Button, Form, FormControl } from "react-bootstrap";
 export default class NavBar extends Component {
     state = {};
 
-    handleItemClick = (e, { name }) => this.setState({ activeItem: name });
-
     render() {
         return (
             <Navbar bg="dark" variant="dark">
