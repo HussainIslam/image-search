@@ -9,33 +9,39 @@ class Home extends Component {
         this.state = {
             searchString: "",
             searchResult: [],
+            pageNumber: 1,
         };
     }
 
     componentDidMount() {}
 
+    pullData() {
+        const options = {
+            headers: {
+                Authorization:
+                    "Client-ID " + process.env.REACT_APP_UNSPLASH_ACCESS_KEY,
+            },
+        };
+        axios
+            .get(
+                `https://api.unsplash.com/search/photos?page=${this.state.pageNumber}&query=${this.state.searchString}&per_page=30`,
+                options
+            )
+            .then((res) => {
+                console.log(res);
+                this.setState({
+                    searchResult: res.data.results,
+                    pageNumber: this.state.pageNumber + 1,
+                });
+            })
+            .catch((error) => console.log(error));
+    }
+
     handleSearch(event) {
         if (event.key === "Enter") {
-            this.setState({ searchString: event.target.value }, () => {
-                console.log(process.env.REACT_APP_UNSPLASH_ACCESS_KEY);
-                const options = {
-                    headers: {
-                        Authorization:
-                            "Client-ID " +
-                            process.env.REACT_APP_UNSPLASH_ACCESS_KEY,
-                    },
-                };
-                axios
-                    .get(
-                        `https://api.unsplash.com/search/photos?page=1&query=${this.state.searchString}&per_page=30`,
-                        options
-                    )
-                    .then((res) => {
-                        console.log(res);
-                        this.setState({ searchResult: res.data.results });
-                    })
-                    .catch((error) => console.log(error));
-            });
+            this.setState({ searchString: event.target.value }, (item) =>
+                this.pullData()
+            );
         }
     }
 
