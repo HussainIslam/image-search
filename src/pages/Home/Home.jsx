@@ -11,9 +11,18 @@ class Home extends Component {
             searchResult: [],
             pageNumber: 1,
         };
+        this.pullData = this.pullData.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
+        this.handleScroll = this.handleScroll.bind(this);
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        window.addEventListener("scroll", this.handleScroll);
+    }
+
+    componentWillMount() {
+        window.removeEventListener("scroll", this.handleScroll);
+    }
 
     pullData() {
         const options = {
@@ -30,7 +39,9 @@ class Home extends Component {
             .then((res) => {
                 console.log(res);
                 this.setState({
-                    searchResult: res.data.results,
+                    searchResult: this.state.searchResult.concat(
+                        res.data.results
+                    ),
                     pageNumber: this.state.pageNumber + 1,
                 });
             })
@@ -45,9 +56,17 @@ class Home extends Component {
         }
     }
 
+    handleScroll(e) {
+        const bottom =
+            window.innerHeight + window.scrollY >= document.body.offsetHeight;
+        if (bottom) {
+            this.pullData();
+        }
+    }
+
     render() {
         return (
-            <div>
+            <div onScroll={this.handleScroll}>
                 <InputGroup className="mb-3">
                     <FormControl
                         placeholder="Search images here"
