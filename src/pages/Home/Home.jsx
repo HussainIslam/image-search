@@ -50,8 +50,13 @@ class Home extends Component {
 
     handleSearch(event) {
         if (event.key === "Enter") {
-            this.setState({ searchString: event.target.value }, (item) =>
-                this.pullData()
+            this.setState(
+                {
+                    searchString: event.target.value,
+                    searchResult: [],
+                    pageNumber: 1,
+                },
+                (item) => this.pullData()
             );
         }
     }
