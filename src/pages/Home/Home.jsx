@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { InputGroup, FormControl } from "react-bootstrap";
+import Images from "../../Components/images/images";
 import axios from "axios";
 
 class Home extends Component {
@@ -7,7 +8,7 @@ class Home extends Component {
         super(props);
         this.state = {
             searchString: "",
-            searchResult: "",
+            searchResult: [],
         };
     }
 
@@ -26,10 +27,13 @@ class Home extends Component {
                 };
                 axios
                     .get(
-                        "https://api.unsplash.com/search/photos?page=1&query=office",
+                        `https://api.unsplash.com/search/photos?page=1&query=${this.state.searchString}`,
                         options
                     )
-                    .then((res) => console.log(res))
+                    .then((res) => {
+                        console.log(res.data.results);
+                        this.setState({ searchResult: res.data.results });
+                    })
                     .catch((error) => console.log(error));
             });
         }
@@ -37,16 +41,25 @@ class Home extends Component {
 
     render() {
         return (
-            <InputGroup className="mb-3">
-                <FormControl
-                    placeholder="Search images here"
-                    aria-label="Search bar for images"
-                    onKeyPress={this.handleSearch.bind(this)}
+            <div>
+                <InputGroup className="mb-3">
+                    <FormControl
+                        placeholder="Search images here"
+                        aria-label="Search bar for images"
+                        onKeyPress={this.handleSearch.bind(this)}
+                    />
+                    <InputGroup.Append>
+                        <InputGroup.Text>Search</InputGroup.Text>
+                    </InputGroup.Append>
+                </InputGroup>
+                <Images
+                    data={
+                        this.state.searchResult.length === 0
+                            ? null
+                            : this.state.searchResult
+                    }
                 />
-                <InputGroup.Append>
-                    <InputGroup.Text>Search</InputGroup.Text>
-                </InputGroup.Append>
-            </InputGroup>
+            </div>
         );
     }
 }
