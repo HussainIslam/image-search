@@ -2,15 +2,6 @@ import React, { Component } from "react";
 import Gallery from "react-photo-gallery";
 
 class Images extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            noData: true,
-            parsingData: false,
-            parsedData: [],
-        };
-    }
-
     render() {
         const data = this.props.data
             ? this.props.data.map((item) => {
@@ -21,7 +12,9 @@ class Images extends Component {
                   return container;
               })
             : null;
-        return data ? <Gallery photos={data} /> : null;
+        return data ? (
+            <Gallery photos={data} direction={"column"} columns="6" />
+        ) : null;
     }
 }
 
