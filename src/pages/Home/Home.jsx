@@ -14,6 +14,7 @@ class Home extends Component {
             contentFilter: "low", //low, high
             imageColor: "", //black_and_white, black, white, yellow, orange, red, purple, magenta, green, teal, blue
             orientation: "", // landscape, portrait, squarish
+            organizeBy: "column", //column, row
         };
         this.pullData = this.pullData.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
@@ -22,6 +23,7 @@ class Home extends Component {
         this.handleFilterContent = this.handleFilterContent.bind(this);
         this.handleSortBy = this.handleSortBy.bind(this);
         this.handleOrientation = this.handleOrientation.bind(this);
+        this.handleOrganize = this.handleOrganize.bind(this);
     }
 
     componentDidMount() {
@@ -136,6 +138,12 @@ class Home extends Component {
         }
     }
 
+    handleOrganize(e) {
+        this.setState({
+            organizeBy: this.state.organizeBy === "column" ? "row" : "column",
+        });
+    }
+
     render() {
         return (
             <div onScroll={this.handleScroll}>
@@ -227,6 +235,19 @@ class Home extends Component {
                             <option value="blue">Blue</option>
                         </Form.Control>
                     </Form.Group>
+                    <Form.Group>
+                        <Form.Control
+                            as="select"
+                            size="sm"
+                            style={{ margin: "5px" }}
+                            onChange={this.handleOrganize}
+                        >
+                            <option value="row">Organize by row</option>
+                            <option value="column" selected>
+                                Organize by column
+                            </option>
+                        </Form.Control>
+                    </Form.Group>
                 </div>
                 <Images
                     data={
@@ -234,6 +255,7 @@ class Home extends Component {
                             ? null
                             : this.state.searchResult
                     }
+                    organizeBy={this.state.organizeBy}
                 />
             </div>
         );
