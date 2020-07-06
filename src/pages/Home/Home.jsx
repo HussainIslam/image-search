@@ -15,6 +15,7 @@ class Home extends Component {
             imageColor: "", //black_and_white, black, white, yellow, orange, red, purple, magenta, green, teal, blue
             orientation: "", // landscape, portrait, squarish
             organizeBy: "column", //column, row
+            itemsPerSection: "6",
         };
         this.pullData = this.pullData.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
@@ -24,6 +25,7 @@ class Home extends Component {
         this.handleSortBy = this.handleSortBy.bind(this);
         this.handleOrientation = this.handleOrientation.bind(this);
         this.handleOrganize = this.handleOrganize.bind(this);
+        this.handleItemNumber = this.handleItemNumber.bind(this);
     }
 
     componentDidMount() {
@@ -144,6 +146,12 @@ class Home extends Component {
         });
     }
 
+    handleItemNumber(e) {
+        this.setState({
+            itemsPerSection: e.target.value,
+        });
+    }
+
     render() {
         return (
             <div onScroll={this.handleScroll}>
@@ -164,7 +172,7 @@ class Home extends Component {
                         }}
                     >
                         <InputGroup.Append style={{ height: "inherit" }}>
-                            <InputGroup.Text>Search</InputGroup.Text>
+                            <InputGroup.Text>Search Images</InputGroup.Text>
                         </InputGroup.Append>
                         <FormControl
                             placeholder="Enter text. Press enter."
@@ -247,6 +255,23 @@ class Home extends Component {
                                 Organize by column
                             </option>
                         </Form.Control>
+                        <Form.Control
+                            as="select"
+                            size="sm"
+                            style={{ margin: "5px" }}
+                            onChange={this.handleItemNumber}
+                        >
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6" selected>
+                                6
+                            </option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </Form.Control>
                     </Form.Group>
                 </div>
                 <Images
@@ -256,6 +281,7 @@ class Home extends Component {
                             : this.state.searchResult
                     }
                     organizeBy={this.state.organizeBy}
+                    itemsPerSection={this.state.itemsPerSection}
                 />
             </div>
         );
