@@ -18,6 +18,10 @@ class Home extends Component {
         this.pullData = this.pullData.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
         this.handleScroll = this.handleScroll.bind(this);
+        this.handleColor = this.handleColor.bind(this);
+        this.handleFilterContent = this.handleFilterContent.bind(this);
+        this.handleSortBy = this.handleSortBy.bind(this);
+        this.handleOrientation = this.handleOrientation.bind(this);
     }
 
     componentDidMount() {
@@ -37,7 +41,19 @@ class Home extends Component {
         };
         axios
             .get(
-                `https://api.unsplash.com/search/photos?page=${this.state.pageNumber}&query=${this.state.searchString}&per_page=30`,
+                `https://api.unsplash.com/search/photos?page=${
+                    this.state.pageNumber
+                }&query=${this.state.searchString}&per_page=30&order_by=${
+                    this.state.orderBy
+                }&content_filter=${this.state.contentFilter}${
+                    this.state.orientation === ""
+                        ? ""
+                        : "&orientation=" + this.state.orientation
+                }${
+                    this.state.imageColor === ""
+                        ? ""
+                        : "&color=" + this.state.imageColor
+                }`,
                 options
             )
             .then((res) => {
@@ -70,6 +86,53 @@ class Home extends Component {
             window.innerHeight + window.scrollY >= document.body.offsetHeight;
         if (bottom) {
             this.pullData();
+        }
+    }
+
+    handleSortBy(e) {
+        this.setState(
+            {
+                orderBy: e.target.value,
+                searchResult: [],
+                pageNumber: 1,
+            },
+            (item) => this.pullData()
+        );
+    }
+
+    handleOrientation(e) {
+        this.setState(
+            {
+                orientation: e.target.value === "All" ? "" : e.target.value,
+                searchResult: [],
+                pageNumber: 1,
+            },
+            (item) => this.pullData()
+        );
+    }
+
+    handleColor(e) {
+        this.setState(
+            {
+                imageColor: e.target.value === "All" ? "" : e.target.value,
+                searchResult: [],
+                pageNumber: 1,
+            },
+            (item) => this.pullData()
+        );
+    }
+
+    handleFilterContent(e) {
+        if (this.state.contentFilter === "low") {
+            this.setState(
+                { contentFilter: "high", searchResult: [], pageNumber: 1 },
+                (item) => this.pullData()
+            );
+        } else {
+            this.setState(
+                { contentFilter: "low", searchResult: [], pageNumber: 1 },
+                (item) => this.pullData()
+            );
         }
     }
 
@@ -110,7 +173,11 @@ class Home extends Component {
                             fontSize: ".8em",
                         }}
                     >
-                        <Form.Control as="select" size="sm">
+                        <Form.Control
+                            as="select"
+                            size="sm"
+                            onChange={this.handleSortBy}
+                        >
                             <option>Relevance</option>
                             <option>Latest</option>
                         </Form.Control>
@@ -118,6 +185,7 @@ class Home extends Component {
                             type={"checkbox"}
                             label={"Filter Contents"}
                             style={{ margin: "5px" }}
+                            onChange={this.handleFilterContent}
                         />
                     </Form.Group>
                     <Form.Group
@@ -133,23 +201,30 @@ class Home extends Component {
                             as="select"
                             size="sm"
                             style={{ margin: "5px" }}
+                            onChange={this.handleOrientation}
                         >
-                            <option>Landscape</option>
-                            <option>Portrait</option>
-                            <option>Squarish</option>
+                            <option value="All">All</option>
+                            <option value="landscape">Landscape</option>
+                            <option value="portrait">Portrait</option>
+                            <option value="squarish">Squarish</option>
                         </Form.Control>
-                        <Form.Control as="select" size="sm">
-                            <option>B & W</option>
-                            <option>Black</option>
-                            <option>White</option>
-                            <option>Yellow</option>
-                            <option>Orange</option>
-                            <option>Red</option>
-                            <option>Purple</option>
-                            <option>Magenta</option>
-                            <option>Green</option>
-                            <option>Teal</option>
-                            <option>Blue</option>
+                        <Form.Control
+                            as="select"
+                            size="sm"
+                            onChange={this.handleColor}
+                        >
+                            <option value="All">All</option>
+                            <option value="black_and_white">B & W</option>
+                            <option value="black">Black</option>
+                            <option value="white">White</option>
+                            <option value="yello">Yellow</option>
+                            <option value="orange">Orange</option>
+                            <option value="red">Red</option>
+                            <option value="purple">Purple</option>
+                            <option value="magenta">Magenta</option>
+                            <option value="green">Green</option>
+                            <option value="teal">Teal</option>
+                            <option value="blue">Blue</option>
                         </Form.Control>
                     </Form.Group>
                 </div>
