@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { InputGroup, FormControl, Form } from "react-bootstrap";
+import { InputGroup, FormControl, Form, Button } from "react-bootstrap";
 import Images from "../../Components/images/images";
 import axios from "axios";
 import S from "./Home.module.css";
+import Logo from "../../assets/img_logo.png";
 
 class Home extends Component {
     constructor(props) {
@@ -17,6 +18,7 @@ class Home extends Component {
             orientation: "", // landscape, portrait, squarish
             organizeBy: "column", //column, row
             itemsPerSection: "6",
+            showOptions: false,
         };
         this.pullData = this.pullData.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
@@ -27,6 +29,7 @@ class Home extends Component {
         this.handleOrientation = this.handleOrientation.bind(this);
         this.handleOrganize = this.handleOrganize.bind(this);
         this.handleItemNumber = this.handleItemNumber.bind(this);
+        this.handleOption = this.handleOption.bind(this);
     }
 
     componentDidMount() {
@@ -94,6 +97,10 @@ class Home extends Component {
         }
     }
 
+    handleOption(e) {
+        this.setState({ showOptions: !this.state.showOptions });
+    }
+
     handleSortBy(e) {
         this.setState(
             {
@@ -156,22 +163,31 @@ class Home extends Component {
     render() {
         return (
             <div onScroll={this.handleScroll}>
-                <h3 className={S.pageHeading}>&lt;img/&gt;</h3>
                 <div className={S.mainContainer}>
-                    <InputGroup className={`mb-3 ${S.inputField}`}>
-                        <InputGroup.Append className={S.inputAppend}>
-                            <InputGroup.Text>Search Images</InputGroup.Text>
-                        </InputGroup.Append>
-                        <FormControl
-                            placeholder="Enter text. Press enter."
-                            aria-label="Search bar for images"
-                            onKeyPress={this.handleSearch.bind(this)}
-                            autoFocus
-                            style={{ height: "inherit" }}
-                        />
-                    </InputGroup>
-                    <div className={S.controlsContainer}>
-                        <Form.Group className={S.formGroup1}>
+                    <div className={S.primaryControls}>
+                        <img className={S.logo} src={Logo} alt="logo" />
+                        <InputGroup className={`mb-3 ${S.inputField}`}>
+                            <InputGroup.Append className={S.inputAppend}>
+                                <InputGroup.Text>Search Images</InputGroup.Text>
+                            </InputGroup.Append>
+                            <FormControl
+                                placeholder="Enter text. Press enter."
+                                aria-label="Search bar for images"
+                                onKeyPress={this.handleSearch.bind(this)}
+                                autoFocus
+                                style={{ height: "inherit" }}
+                            />
+                        </InputGroup>
+                        <Button
+                            variant="secondary"
+                            onClick={this.handleOption}
+                            className={S.optionButton}
+                        >
+                            Options
+                        </Button>
+                    </div>
+                    {this.state.showOptions ? (
+                        <div className={S.controlsContainer}>
                             <Form.Control
                                 as="select"
                                 size="sm"
@@ -180,21 +196,13 @@ class Home extends Component {
                                 <option>Relevance</option>
                                 <option>Latest</option>
                             </Form.Control>
-                            <Form.Check
-                                type={"checkbox"}
-                                label={"Filter Contents"}
-                                style={{ margin: "5px" }}
-                                onChange={this.handleFilterContent}
-                            />
-                        </Form.Group>
-                        <Form.Group className={S.formGroup2}>
                             <Form.Control
                                 as="select"
                                 size="sm"
                                 className={S.orientationSelect}
                                 onChange={this.handleOrientation}
                             >
-                                <option value="All">All</option>
+                                <option value="All">All Orientation</option>
                                 <option value="landscape">Landscape</option>
                                 <option value="portrait">Portrait</option>
                                 <option value="squarish">Squarish</option>
@@ -204,7 +212,7 @@ class Home extends Component {
                                 size="sm"
                                 onChange={this.handleColor}
                             >
-                                <option value="All">All</option>
+                                <option value="All">All Color</option>
                                 <option value="black_and_white">B & W</option>
                                 <option value="black">Black</option>
                                 <option value="white">White</option>
@@ -217,8 +225,6 @@ class Home extends Component {
                                 <option value="teal">Teal</option>
                                 <option value="blue">Blue</option>
                             </Form.Control>
-                        </Form.Group>
-                        <Form.Group className={S.formGroup3}>
                             <Form.Control
                                 as="select"
                                 size="sm"
@@ -247,8 +253,8 @@ class Home extends Component {
                                 <option value="9">9</option>
                                 <option value="10">10</option>
                             </Form.Control>
-                        </Form.Group>
-                    </div>
+                        </div>
+                    ) : null}
                 </div>
                 <Images
                     data={
