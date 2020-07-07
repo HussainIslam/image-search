@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { InputGroup, FormControl, Form } from "react-bootstrap";
 import Images from "../../Components/images/images";
 import axios from "axios";
+import S from "./Home.module.css";
 
 class Home extends Component {
     constructor(props) {
@@ -155,23 +156,10 @@ class Home extends Component {
     render() {
         return (
             <div onScroll={this.handleScroll}>
-                <div
-                    style={{
-                        display: "flex",
-                        width: "90vw",
-                        margin: "20px auto 20px auto",
-                    }}
-                >
-                    <InputGroup
-                        className="mb-3"
-                        style={{
-                            width: "60%",
-                            height: "40px",
-                            margin: "10px",
-                            alignSelf: "center",
-                        }}
-                    >
-                        <InputGroup.Append style={{ height: "inherit" }}>
+                <h3 className={S.pageHeading}>&lt;img/&gt;</h3>
+                <div className={S.mainContainer}>
+                    <InputGroup className={`mb-3 ${S.inputField}`}>
+                        <InputGroup.Append className={S.inputAppend}>
                             <InputGroup.Text>Search Images</InputGroup.Text>
                         </InputGroup.Append>
                         <FormControl
@@ -182,97 +170,85 @@ class Home extends Component {
                             style={{ height: "inherit" }}
                         />
                     </InputGroup>
-                    <Form.Group
-                        style={{
-                            height: "40px",
-                            margin: "10px",
-                            fontSize: ".8em",
-                        }}
-                    >
-                        <Form.Control
-                            as="select"
-                            size="sm"
-                            onChange={this.handleSortBy}
-                        >
-                            <option>Relevance</option>
-                            <option>Latest</option>
-                        </Form.Control>
-                        <Form.Check
-                            type={"checkbox"}
-                            label={"Filter Contents"}
-                            style={{ margin: "5px" }}
-                            onChange={this.handleFilterContent}
-                        />
-                    </Form.Group>
-                    <Form.Group
-                        style={{
-                            margin: "5px",
-                            fontSize: "0.8em",
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Form.Control
-                            as="select"
-                            size="sm"
-                            style={{ margin: "5px" }}
-                            onChange={this.handleOrientation}
-                        >
-                            <option value="All">All</option>
-                            <option value="landscape">Landscape</option>
-                            <option value="portrait">Portrait</option>
-                            <option value="squarish">Squarish</option>
-                        </Form.Control>
-                        <Form.Control
-                            as="select"
-                            size="sm"
-                            onChange={this.handleColor}
-                        >
-                            <option value="All">All</option>
-                            <option value="black_and_white">B & W</option>
-                            <option value="black">Black</option>
-                            <option value="white">White</option>
-                            <option value="yello">Yellow</option>
-                            <option value="orange">Orange</option>
-                            <option value="red">Red</option>
-                            <option value="purple">Purple</option>
-                            <option value="magenta">Magenta</option>
-                            <option value="green">Green</option>
-                            <option value="teal">Teal</option>
-                            <option value="blue">Blue</option>
-                        </Form.Control>
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Control
-                            as="select"
-                            size="sm"
-                            style={{ margin: "5px" }}
-                            onChange={this.handleOrganize}
-                        >
-                            <option value="row">Organize by row</option>
-                            <option value="column" selected>
-                                Organize by column
-                            </option>
-                        </Form.Control>
-                        <Form.Control
-                            as="select"
-                            size="sm"
-                            style={{ margin: "5px" }}
-                            onChange={this.handleItemNumber}
-                        >
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6" selected>
-                                6
-                            </option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                        </Form.Control>
-                    </Form.Group>
+                    <div className={S.controlsContainer}>
+                        <Form.Group className={S.formGroup1}>
+                            <Form.Control
+                                as="select"
+                                size="sm"
+                                onChange={this.handleSortBy}
+                            >
+                                <option>Relevance</option>
+                                <option>Latest</option>
+                            </Form.Control>
+                            <Form.Check
+                                type={"checkbox"}
+                                label={"Filter Contents"}
+                                style={{ margin: "5px" }}
+                                onChange={this.handleFilterContent}
+                            />
+                        </Form.Group>
+                        <Form.Group className={S.formGroup2}>
+                            <Form.Control
+                                as="select"
+                                size="sm"
+                                className={S.orientationSelect}
+                                onChange={this.handleOrientation}
+                            >
+                                <option value="All">All</option>
+                                <option value="landscape">Landscape</option>
+                                <option value="portrait">Portrait</option>
+                                <option value="squarish">Squarish</option>
+                            </Form.Control>
+                            <Form.Control
+                                as="select"
+                                size="sm"
+                                onChange={this.handleColor}
+                            >
+                                <option value="All">All</option>
+                                <option value="black_and_white">B & W</option>
+                                <option value="black">Black</option>
+                                <option value="white">White</option>
+                                <option value="yello">Yellow</option>
+                                <option value="orange">Orange</option>
+                                <option value="red">Red</option>
+                                <option value="purple">Purple</option>
+                                <option value="magenta">Magenta</option>
+                                <option value="green">Green</option>
+                                <option value="teal">Teal</option>
+                                <option value="blue">Blue</option>
+                            </Form.Control>
+                        </Form.Group>
+                        <Form.Group className={S.formGroup3}>
+                            <Form.Control
+                                as="select"
+                                size="sm"
+                                className={S.organization}
+                                onChange={this.handleOrganize}
+                            >
+                                <option value="row">Row</option>
+                                <option value="column" selected>
+                                    Column
+                                </option>
+                            </Form.Control>
+                            <Form.Control
+                                as="select"
+                                size="sm"
+                                className={S.numberOfItem}
+                                onChange={this.handleItemNumber}
+                            >
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6" selected>
+                                    6
+                                </option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </Form.Control>
+                        </Form.Group>
+                    </div>
                 </div>
                 <Images
                     data={

@@ -1,0 +1,88 @@
+.pageHeading {
+    margin-top: 10px;
+    color: white;
+}
+.mainContainer {
+    display: flex;
+    width: 90vw;
+    margin: 0 auto 20px auto;
+    justify-content: flex-start;
+}
+
+.controlsContainer {
+    width: 40%;
+    display: flex;
+}
+
+.inputField {
+    width: 60;
+    height: 40px;
+    margin: 10px;
+    align-self: center;
+}
+
+.inputAppend {
+    height: inherit;
+}
+
+.formGroup1 {
+    margin: 10px;
+    height: 40px;
+    font-size: 0.8em;
+    color: white;
+}
+
+.formGroup2 {
+    margin: 5px;
+    font-size: 0.8em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.orientationSelect {
+    margin: 5px;
+}
+.organization {
+    composes: orientationSelect;
+}
+
+.numberOfItem {
+    composes: orientationSelect;
+}
+
+@media only screen and (max-width: 600px) {
+    .mainContainer {
+        flex-direction: column;
+        width: 95vw;
+        justify-content: flex-start;
+    }
+
+    .controlsContainer {
+        flex-direction: row;
+        width: 100%;
+        align-items: flex-start;
+    }
+
+    .inputAppend {
+        display: none !important;
+    }
+
+    .formGroup1 {
+        width: 30vw;
+        margin: 0 3px 0 3px;
+        font-size: 0.7em;
+    }
+    .formGroup2 {
+        width: 30vw;
+        margin: 0 3px 0 3px;
+        font-size: 0.7em;
+    }
+    .formGroup3 {
+        width: 30vw;
+        margin: 0 3px 0 3px;
+        font-size: 0.7em;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+}
