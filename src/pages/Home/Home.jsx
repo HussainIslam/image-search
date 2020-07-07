@@ -201,6 +201,7 @@ class Home extends Component {
                                 size="sm"
                                 className={S.orientationSelect}
                                 onChange={this.handleOrientation}
+                                defaultValue="All"
                             >
                                 <option value="All">All Orientation</option>
                                 <option value="landscape">Landscape</option>
@@ -211,6 +212,7 @@ class Home extends Component {
                                 as="select"
                                 size="sm"
                                 onChange={this.handleColor}
+                                defaultValue="All"
                             >
                                 <option value="All">All Color</option>
                                 <option value="black_and_white">B & W</option>
@@ -230,11 +232,10 @@ class Home extends Component {
                                 size="sm"
                                 className={S.organization}
                                 onChange={this.handleOrganize}
+                                defaultValue="column"
                             >
                                 <option value="row">Row</option>
-                                <option value="column" selected>
-                                    Column
-                                </option>
+                                <option value="column">Column</option>
                             </Form.Control>
                             <Form.Control
                                 as="select"
