@@ -4,6 +4,7 @@ import Images from "../../Components/images/images";
 import axios from "axios";
 import S from "./Home.module.css";
 import Logo from "../../assets/img_logo.png";
+import { isMobile, isMobileOnly } from "react-device-detect";
 
 class Home extends Component {
     constructor(props) {
@@ -17,7 +18,7 @@ class Home extends Component {
             imageColor: "", //black_and_white, black, white, yellow, orange, red, purple, magenta, green, teal, blue
             orientation: "", // landscape, portrait, squarish
             organizeBy: "column", //column, row
-            itemsPerSection: "6",
+            itemsPerSection: isMobileOnly ? 2 : 6,
             showOptions: false,
         };
         this.pullData = this.pullData.bind(this);
@@ -242,13 +243,13 @@ class Home extends Component {
                                 size="sm"
                                 className={S.numberOfItem}
                                 onChange={this.handleItemNumber}
+                                defaultValue={isMobile ? "2" : "6"}
                             >
+                                <option value="2">2</option>
                                 <option value="3">3</option>
                                 <option value="4">4</option>
                                 <option value="5">5</option>
-                                <option value="6" selected>
-                                    6
-                                </option>
+                                <option value="6">6</option>
                                 <option value="7">7</option>
                                 <option value="8">8</option>
                                 <option value="9">9</option>

@@ -38,7 +38,7 @@ const Images = (props) => {
                 <Gallery
                     photos={data}
                     direction={props.organizeBy}
-                    columns={props.itemsPerSection}
+                    columns={parseInt(props.itemsPerSection)}
                     onClick={openLightbox}
                 />
             ) : null}
